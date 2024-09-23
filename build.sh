@@ -93,6 +93,7 @@ libtool -static -o signed/mac/libswiftgmp.a       signed/mac/libgmp.a       sign
 libtool -static -o signed/iPhone/libswiftgmp.a    signed/iPhone/libgmp.a    signed/iPhone/libmpfr.a
 libtool -static -o signed/simulator/libswiftgmp.a signed/simulator/libgmp.a signed/simulator/libmpfr.a
 
+rm -rf swiftgmp.xcframework
 xcodebuild -create-xcframework \
 -library signed/mac/libswiftgmp.a \
 -headers include \
