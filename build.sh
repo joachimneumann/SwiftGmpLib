@@ -9,7 +9,7 @@ DEVELOPER=`${__name} ${__pr}`
 
 SDKVERSION=`xcrun -sdk iphoneos --show-sdk-version`
 
-MIN_IOS="14.0"
+MIN_IOS="17.0"
 
 BITCODE="-fembed-bitcode"
 
@@ -53,10 +53,10 @@ rm -rf iPhone simulator mac
 mkdir iPhone simulator mac
 
 cd gmp
-build "arm64" "${IPHONEOS_SDK}" "${IPHONEOS_PLATFORM}"
+build "arm64" "${IPHONEOS_SDK}" "${IPHONEOS_PLATFORM}" "-mios-version-min=${MIN_IOS}"
 cp .libs/libgmp.a ../iPhone/libgmp.a
 
-build "arm64" "${IPHONESIMULATOR_SDK}" "${IPHONESIMULATOR_PLATFORM}"
+build "arm64" "${IPHONESIMULATOR_SDK}" "${IPHONESIMULATOR_PLATFORM}" "-mios-simulator-version-min=${MIN_IOS}"
 cp .libs/libgmp.a ../simulator/libgmp.a
 
 build "arm64" "${OSX_SDK}" "${OSX_PLATFORM}"
@@ -66,10 +66,10 @@ cd ..
 pwd=`pwd`
 
 cd mpfr
-build "arm64" "${IPHONEOS_SDK}" "${IPHONEOS_PLATFORM}" "" "--with-gmp-lib=${pwd}/iPhone --with-gmp-include=${pwd}/include"
+build "arm64" "${IPHONEOS_SDK}" "${IPHONEOS_PLATFORM}" "-mios-version-min=${MIN_IOS}" "--with-gmp-lib=${pwd}/iPhone --with-gmp-include=${pwd}/include"
 cp src/.libs/libmpfr.a ../iPhone/libmpfr.a
 
-build "arm64" "${IPHONESIMULATOR_SDK}" "${IPHONESIMULATOR_PLATFORM}" "" "--with-gmp-lib=${pwd}/simulator --with-gmp-include=${pwd}/include"
+build "arm64" "${IPHONESIMULATOR_SDK}" "${IPHONESIMULATOR_PLATFORM}" "-mios-simulator-version-min=${MIN_IOS}" "--with-gmp-lib=${pwd}/simulator --with-gmp-include=${pwd}/include"
 cp src/.libs/libmpfr.a ../simulator/libmpfr.a
 
 build "arm64" "${OSX_SDK}" "${OSX_PLATFORM}" "" "--with-gmp-lib=${pwd}/mac --with-gmp-include=${pwd}/include"
